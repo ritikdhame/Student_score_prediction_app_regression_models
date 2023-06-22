@@ -1,8 +1,8 @@
 import sys
-from dataclass import dataclass
+from dataclasses import dataclass
 
 import numpy as np 
-import pandas as pd 
+import pandas as pd
 from sklearn.compose import ColumnTransformer
 from sklearn.impute import SimpleImputer
 from sklearn.pipeline import Pipeline
@@ -10,14 +10,13 @@ from sklearn.preprocessing import OneHotEncoder,StandardScaler
 
 from src.exception import CustomException
 from src.logger import logging
-import os 
+import os
 
 from src.utils import save_object
 
 @dataclass
 class DataTransformationConfig:
     preprocessor_obj_file_path=os.path.join('artifacts',"proprocessor.pkl")
-    #creating a pickel file to store and exchange Python objects.
 
 class DataTransformation:
     def __init__(self):
@@ -40,21 +39,21 @@ class DataTransformation:
 
             num_pipeline= Pipeline(
                 steps=[
-                ("imputer",SimpleImputer(stratergy="median")),
+                ("imputer",SimpleImputer(strategy="median")),
                 ("scaler",StandardScaler())
 
                 ]
-            )#creating pipeling for handinling missing value and scaling 
+            )
 
             cat_pipeline=Pipeline(
 
                 steps=[
-                ("imputer",SimpleImputer(stratergy="most_frequent")),
+                ("imputer",SimpleImputer(strategy="most_frequent")),
                 ("one_hot_encoder",OneHotEncoder()),
                 ("scaler",StandardScaler(with_mean=False))
                 ]
 
-            )#handle missing values, one hot encoding
+            )
 
             logging.info(f"Categorical columns: {categorical_columns}")
             logging.info(f"Numerical columns: {numerical_columns}")
@@ -86,7 +85,7 @@ class DataTransformation:
 
             preprocessing_obj=self.get_data_transformer_object()
 
-            target_column_name="math_score" #setting target variable
+            target_column_name="math_score"
             numerical_columns = ["writing_score", "reading_score"]
 
             input_feature_train_df=train_df.drop(columns=[target_column_name],axis=1)
@@ -114,7 +113,7 @@ class DataTransformation:
                 file_path=self.data_transformation_config.preprocessor_obj_file_path,
                 obj=preprocessing_obj
 
-            )#saving pickle file
+            )
 
             return (
                 train_arr,
@@ -123,7 +122,3 @@ class DataTransformation:
             )
         except Exception as e:
             raise CustomException(e,sys)
-
-
-
-
