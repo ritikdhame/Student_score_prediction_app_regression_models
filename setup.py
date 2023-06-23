@@ -17,7 +17,7 @@ def get_requirements(file_path:str)->List[str]:
     return requirements
 
 setup(
-name='AFlite',
+name='Student Score prediction app',
 version='0.0.1',
 author='Ritik_Dhame',
 author_email='rndhame@syr.edu',
