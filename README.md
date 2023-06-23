@@ -1,1 +1,1 @@
-git pull https://github.com/ritikdhame/Student_score_prediction_app_regression_models.git
+building a flask app that [redicts stunt score based on regression models by deploying it on AWS beanstock 
